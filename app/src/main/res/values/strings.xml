@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Trivia</string>
+    <string name="title">Trivia</string>
+    <string name="btn_false_text">False</string>
+    <string name="btn_true_text">True</string>
+</resources>

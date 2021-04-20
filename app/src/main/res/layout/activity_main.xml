@@ -51,11 +51,14 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="15dp"
-        app:cardBackgroundColor="#AC97CF"
+        app:cardBackgroundColor="#ADB197CF"
         app:cardCornerRadius="20dp"
         app:cardElevation="7dp"
         app:contentPadding="8dp"
         app:layout_constraintBottom_toTopOf="@id/layout_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title">
 
         <TextView
@@ -66,7 +69,7 @@
             android:layout_margin="5dp"
             android:background="#00FFFFFF"
             android:text="Treruizvnz.dfn nliuzdrhfnvdf,"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="22sp" />
     </androidx.cardview.widget.CardView>
 
@@ -78,6 +81,15 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
+            android:id="@+id/btn_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_weight="50"
+            android:backgroundTint="#8E46B5"
+            android:text="@string/btn_false_text" />
+
+        <Button
             android:id="@+id/btn_true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,14 +98,6 @@
             android:backgroundTint="#8E46B5"
             android:text="@string/btn_true_text" />
 
-        <Button
-            android:id="@+id/btn_false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:layout_weight="50"
-            android:backgroundTint="#8E46B5"
-            android:text="@string/btn_false_text" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

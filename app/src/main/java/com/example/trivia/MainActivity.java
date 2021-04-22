@@ -3,6 +3,7 @@ package com.example.trivia;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView questionCounterTextview, correctAnswerTextview, questionTextview;
     private Button answerTrueButton, answerFalseButton;
-    private int currentQuestionIndex = 1;
+    private int dataTransition = 0;
+    private int currentQuestionIndex = 0;
     private int correctAnswersCounter = 0;
     private List<Question> questionList;
 
@@ -47,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void processFinished(ArrayList<Question> questionArrayList) {
                 questionTextview.setText(questionArrayList.get(currentQuestionIndex).getAnswer());
-                questionCounterTextview.setText(currentQuestionIndex + " / " + questionArrayList.size());
-                correctAnswerTextview.setText(correctAnswersCounter + " / " + (currentQuestionIndex - 1));
+                questionCounterTextview.setText(currentQuestionIndex + " / " + (questionArrayList.size() - 1));
+                correctAnswerTextview.setText("Правильных ответов: " + correctAnswersCounter);
                 Log.d("iside", "processFinished: " + questionArrayList);
             }
         });
@@ -76,17 +78,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (userChooseCorrect == answerIsTrue) {
             correctAnswersCounter++;
             fadeView();
-            correctAnswerTextview.setText(correctAnswersCounter + " / " + currentQuestionIndex);
+            correctAnswerTextview.setText(("Правильных ответов: " + correctAnswersCounter));
         } else {
             shakeAnimation();
-            correctAnswerTextview.setText(correctAnswersCounter + " / " + currentQuestionIndex);
+            correctAnswerTextview.setText(("Правильных ответов: " + correctAnswersCounter));
         }
     }
 
     private void updateQuestion() {
         String question = questionList.get(currentQuestionIndex).getAnswer();
+        fadeInTxtQuestion();
         questionTextview.setText(question);
-        questionCounterTextview.setText(currentQuestionIndex + " / " + questionList.size());
+        questionCounterTextview.setText(currentQuestionIndex + " / " + (questionList.size() - 1));
+        Log.d("upd", "updateQuestion: " + currentQuestionIndex);
+
+        dataTransition = correctAnswersCounter;
+        if (currentQuestionIndex == 0) endOfQuiz();
     }
 
 //==================================== Animations ==================================================
@@ -137,7 +144,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-//===================================== Delay ahead to update question =============================
+    private void fadeInTxtQuestion() {
+        Animation fadeIn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_in_txt);
+        TextView txt = findViewById(R.id.question_textview);
+        txt.setAnimation(fadeIn);
+
+    }
+
+//============================ Задержка перед обновлением вопроса для анимации =====================
+
 
     private void delayUpdateQuestion() {
         final Handler handler = new Handler();
@@ -147,6 +162,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 updateQuestion();
             }
         }, 500);
+    }
+
+    private void endOfQuiz() {
+        String dataOut = String.valueOf(correctAnswersCounter);
+        Intent intent = new Intent(MainActivity.this, EndScreen.class);
+        intent.putExtra("correctAnswers", dataOut);
+        startActivity(intent);
     }
 
 

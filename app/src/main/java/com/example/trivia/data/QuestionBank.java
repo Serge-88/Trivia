@@ -15,10 +15,15 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+//==================================================================================================
+//============================== Getting questions from JSON file ==================================
+//==================================================================================================
+
 public class QuestionBank {
 
     ArrayList<Question> questionArrayList = new ArrayList<>();
-    private String url = "https://raw.githubusercontent.com/curiousily/simple-quiz/master/script/statements-data.json";
+//    private String url = "https://raw.githubusercontent.com/curiousily/simple-quiz/master/script/statements-data.json";
+    private String url = "https://raw.githubusercontent.com/Serge-88/JSON_for_my_app/main/Questions.json";
 
     public List<Question> getQuestions(final AnswerListAsyncResponse callback) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -31,6 +36,9 @@ public class QuestionBank {
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 Question question = new Question();
+
+                                // берём данные по индексу из JSONa, где нулевой индекс - вопрос, первый индекс - правильный ответ
+
                                 question.setAnswer(response.getJSONArray(i).get(0).toString());
                                 question.setAnswerTrue(response.getJSONArray(i).getBoolean(1));
 
